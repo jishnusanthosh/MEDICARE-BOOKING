@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import singupImg from '../assets/images/signup.gif'
 import uploadImageToCloudinary from '../utils/uploadCloudinary'
-import avatar from '../assets/images/doctor-img01.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../config'
 import { toast } from 'react-toastify'
+
 import HashLoader from 'react-spinners/HashLoader'
 
 const Signup = () => {
@@ -36,6 +36,7 @@ const Signup = () => {
   const submitHandler = async (event) => {
     event.preventDefault()
     setLoading(true)
+
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
         method: 'post',
@@ -43,19 +44,22 @@ const Signup = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      }).then((res)=>res.json())
-      .then((data)=>console.log("Registration response:", data))
-      .catch((error) => console.error("Error during registration:", error));
+      })
+
       const { message } = await res.json()
 
-      if (!res.OK) {
+      if (!res.ok) {
         throw new Error(message)
       }
-      setLoading(false)
+
       toast.success(message)
-      navigate('/login')
+      // Try wrapping the navigate call in a setTimeout
+      setTimeout(() => {
+        navigate('/login')
+      }, 1000) // Adjust the timeout duration as needed
     } catch (error) {
       toast.error(error.message)
+    } finally {
       setLoading(false)
     }
   }
@@ -113,6 +117,7 @@ const Signup = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
+                  autoComplete="current-password"
                   className="w-full pr-4  py-3 border-b border-solid border-[#0066ff61]  focus:outline-none 
               focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -128,7 +133,7 @@ const Signup = () => {
                   <select
                     name="role"
                     value={formData.role}
-                    onClick={handleInputChange}
+                    onChange={handleInputChange}
                     className="text=textColor font-semibold tex-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
                     <option value="patient">Patient</option>

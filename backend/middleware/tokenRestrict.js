@@ -1,3 +1,6 @@
+import Doctor from "../models/DoctorSchema.js";
+import User from "../models/UserSchema.js";
+
 export const restrict = roles => async(req,res,next)=>{
 
     const userId=req.userId
