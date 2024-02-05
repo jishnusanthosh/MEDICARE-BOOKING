@@ -89,9 +89,9 @@ function MyAccount() {
                   Profile Settings
                 </button>
               </div>
-              {tab == 'booking' && <MyBooking />}
+              {tab === 'bookings' && <MyBooking />}
 
-              {tab == 'profile' && <Profile user={userData} />}
+              {tab === 'settings' && <Profile user={userData} />}
             </div>
           </div>
         )}

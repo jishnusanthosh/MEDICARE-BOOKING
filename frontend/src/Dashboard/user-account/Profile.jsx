@@ -3,12 +3,10 @@ import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL, token } from "../../config";
 import { toast } from "react-toastify";
-
 import HashLoader from "react-spinners/HashLoader";
 
 const Profile = (user) => {
   const [selectedFile, setSelectedFile] = useState(null);
-
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -16,15 +14,21 @@ const Profile = (user) => {
     password: "",
     photo: null,
     gender: "",
-    bloodType:""
+    bloodType: ""
   });
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    setFormData({name:user.name,email:user.email,photo:user.photo, gender:user.gender,bloodType:user.bloodType})
-  },[user])
-
+  useEffect(() => {
+    setFormData({
+      name: user.name,
+      email: user.email,
+      password: "",
+      photo: user.photo,
+      gender: user.gender,
+      bloodType: user.bloodType
+    });
+  }, [user]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,10 +38,10 @@ const Profile = (user) => {
     const file = event.target.files[0];
     const data = await uploadImageToCloudinary(file);
 
-
     setSelectedFile(data.url);
     setFormData({ ...formData, photo: data.url });
   };
+
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -47,7 +51,7 @@ const Profile = (user) => {
         method: "put",
         headers: {
           "Content-Type": "application/json",
-          Authorization:`Bearer ${token} `
+          Authorization: `Bearer ${token} `
         },
         body: JSON.stringify(formData),
       });
@@ -59,10 +63,9 @@ const Profile = (user) => {
       }
 
       toast.success(message);
-      // Try wrapping the navigate call in a setTimeout
       setTimeout(() => {
         navigate("/users/profile/me");
-      }, 1000); // Adjust the timeout duration as needed
+      }, 1000);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -71,62 +74,55 @@ const Profile = (user) => {
   };
 
   return (
-    <div className="mt-10"  >
+    <div className="mt-10">
       <form onSubmit={submitHandler}>
-        <div className="mb-5 ">
+        <div className="mb-5">
           <input
             type="text"
-            placeholder="Full Name "
+            placeholder="Full Name"
             name="name"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full pr-4  py-3 border-b border-solid border-[#0066ff61]  focus:outline-none 
-              focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             required
           />
         </div>
-        <div className="mb-5 ">
+        <div className="mb-5">
           <input
             type="email"
-            placeholder="enter your email"
+            placeholder="Enter your email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full pr-4  py-3 border-b border-solid border-[#0066ff61]  focus:outline-none 
-      focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             aria-readonly
             readOnly
           />
         </div>
-
-        <div className="mb-5 ">
+        <div className="mb-5">
           <input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             name="password"
             value={formData.password}
             onChange={handleInputChange}
             autoComplete="current-password"
-            className="w-full pr-4  py-3 border-b border-solid border-[#0066ff61]  focus:outline-none 
-              focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             required
           />
         </div>
-        <div className="mb-5 ">
+        <div className="mb-5">
           <input
             type="text"
             placeholder="Blood Type"
             name="bloodType"
             value={formData.bloodType}
             onChange={handleInputChange}
-  
-            className="w-full pr-4  py-3 border-b border-solid border-[#0066ff61]  focus:outline-none 
-              focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+            className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
             required
           />
         </div>
-
-        <div className="mb-5 flex items=center justify-between ">
+        <div className="mb-5 flex items=center justify-between">
           <label className="text-headingColor font-bold text-[16px] leading-7">
             Gender:
             <select
@@ -142,14 +138,10 @@ const Profile = (user) => {
             </select>
           </label>
         </div>
-
-        <div className=" mb-5 flex items-center gap-3">
+        <div className="mb-5 flex items-center gap-3">
           {formData.photo && (
-            <figure
-              className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor
-            flex items-center justify-center "
-            >
-              <img src={formData.photo} alt="" className="w-full rounded-full " />
+            <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+              <img src={formData.photo} alt="" className="w-full rounded-full" />
             </figure>
           )}
           <div className="relative w-[160px] h-[50px]">
@@ -163,10 +155,9 @@ const Profile = (user) => {
             />
             <label
               htmlFor="customFile"
-              className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer "
+              className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
             >
-              {selectedFile?selectedFile.name :'Upload Photo'}
-              
+              {selectedFile ? selectedFile.name : 'Upload Photo'}
             </label>
           </div>
         </div>

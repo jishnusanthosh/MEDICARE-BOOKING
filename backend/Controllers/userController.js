@@ -3,6 +3,7 @@ import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateUser = async (req, res) => {
+  console.log(req.body);
   const id = req.params.id;
   try {
     const updateUser = await User.findByIdAndUpdate(

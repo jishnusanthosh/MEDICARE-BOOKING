@@ -1,4 +1,4 @@
-import React from 'react'
+
 import About from '../components/About/About'
 import { Link } from 'react-router-dom'
 import { BsArrowRight } from 'react-icons/bs'
@@ -33,10 +33,8 @@ const Home = () => {
                 We help patients live a healthy, longer life
               </h1>
               <p className="text_para">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad,
-                expedita aliquid ipsam ab explicabo provident? Dolore iste modi
-                sint in repellendus, expedita quos commodi cumque quia eveniet
-                soluta recusandae reprehenderit?
+              Providing compassionate healthcare for over three decades.
+               Our dedicated team ensures patient satisfaction and well-being
               </p>
               <button className="btn">Request an Appointment</button>
             </div>
@@ -277,8 +275,7 @@ const Home = () => {
         <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">what our patient say</h2>
             <p className="text__para text-center">
-              World-class care for everyone.Our Health System Offers unmatched,
-              expert health care
+            Read testimonials from patients who have experienced our world-class care
             </p>
           </div>
 
