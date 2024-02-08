@@ -1,68 +1,68 @@
-import { useState } from 'react'
-import singupImg from '../assets/images/signup.gif'
-import uploadImageToCloudinary from '../utils/uploadCloudinary'
-import { Link, useNavigate } from 'react-router-dom'
-import { BASE_URL } from '../config'
-import { toast } from 'react-toastify'
+import { useState } from "react";
+import singupImg from "../assets/images/signup.gif";
+import uploadImageToCloudinary from "../utils/uploadCloudinary";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config";
+import { toast } from "react-toastify";
 
-import HashLoader from 'react-spinners/HashLoader'
+import HashLoader from "react-spinners/HashLoader";
 
 const Signup = () => {
-  const [selectedFile, setSelectedFile] = useState(null)
-  const [previewURL, setPreviewURL] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState("");
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
+    name: "",
+    email: "",
+    password: "",
     photo: selectedFile,
-    gender: '',
-    role: 'patient',
-  })
+    gender: "",
+    role: "patient",
+  });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleFileInputChange = async (event) => {
-    const file = event.target.files[0]
-    const data = await uploadImageToCloudinary(file)
+    const file = event.target.files[0];
+    const data = await uploadImageToCloudinary(file);
 
-    setPreviewURL(data.url)
-    setSelectedFile(data.url)
-    setFormData({ ...formData, photo: data.url })
-  }
+    setPreviewURL(data.url);
+    setSelectedFile(data.url);
+    setFormData({ ...formData, photo: data.url });
+  };
   const submitHandler = async (event) => {
-    event.preventDefault()
-    setLoading(true)
+    event.preventDefault();
+    setLoading(true);
 
     try {
       const res = await fetch(`${BASE_URL}/auth/register`, {
-        method: 'post',
+        method: "post",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const { message } = await res.json()
+      const { message } = await res.json();
 
       if (!res.ok) {
-        throw new Error(message)
+        throw new Error(message);
       }
 
-      toast.success(message)
+      toast.success(message);
       // Try wrapping the navigate call in a setTimeout
       setTimeout(() => {
-        navigate('/login')
-      }, 1000) // Adjust the timeout duration as needed
+        navigate("/login");
+      }, 1000); // Adjust the timeout duration as needed
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <section className="px-5 xl:px-0 ">
@@ -183,7 +183,7 @@ const Signup = () => {
                     htmlFor="customFile"
                     className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer "
                   >
-                    {' '}
+                    {" "}
                     Upload Photo
                   </label>
                 </div>
@@ -197,13 +197,13 @@ const Signup = () => {
                   {loading ? (
                     <HashLoader size={35} color="#ffffff" />
                   ) : (
-                    'Sign Up'
+                    "Sign Up"
                   )}
                 </button>
               </div>
 
               <p className="mt-5 text text-textColor text-center">
-                Already have an account?{' '}
+                Already have an account?{" "}
                 <Link
                   to="/login"
                   className="text-primaryColor font-medium mt-1"
@@ -216,7 +216,7 @@ const Signup = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
