@@ -6,6 +6,11 @@ import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
 
+import { BASE_URL } from './../../config'
+import useFetchData from './../../Hooks/useFetchData'
+import Loader from '../../components/Loader/Loading'
+import Error from '../../components/Error/Error'
+
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
 
