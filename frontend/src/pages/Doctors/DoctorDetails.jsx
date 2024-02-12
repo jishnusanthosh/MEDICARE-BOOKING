@@ -1,15 +1,14 @@
-import 
- { useState } from "react";
+import { useState } from "react";
 import doctorImg from "../../assets/images/doctor-img02.png";
 import starIcon from "../../assets/images/Star.png";
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
 
-import { BASE_URL } from './../../config'
-import useFetchData from './../../Hooks/useFetchData'
-import Loader from '../../components/Loader/Loading'
-import Error from '../../components/Error/Error'
+import { BASE_URL } from "./../../config";
+import useFetchData from "./../../Hooks/useFetchData";
+import Loader from "../../components/Loader/Loading";
+import Error from "../../components/Error/Error";
 
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
@@ -68,13 +67,22 @@ const DoctorDetails = () => {
               </button>
             </div>
             <div className="mt-[50px]">
-              {tab == "about" && <DoctorAbout />}
-              {tab == "feedback" && <Feedback />}
+              {tab == "about" && (
+                <DoctorAbout
+                  name={name}
+                  about={about}
+                  qualifications={qualifications}
+                  experiences={experiences}
+                />
+              )}
+              {tab == "feedback" && (
+                <Feedback reviews={reviews} totalRating={totalRating} />
+              )}
             </div>
           </div>
 
           <div>
-            <SidePanel/>
+            <SidePanel doctorId={doctor._id}  ticketPrice={ticketPrice} timeSlots={timeSlots}/>
           </div>
         </div>
       </div>
