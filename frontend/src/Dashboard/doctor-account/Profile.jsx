@@ -1,37 +1,35 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
-import {doctorData} from '../../assets/data/doctors'
+import { doctors } from '../../assets/data/doctors';
 
 const Profile = () => {
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    bio: '',
-    specialization: '',
-    ticketPrice: 0,
-    qualifications: [{ startingDate: '', endingDate: '', degree: '', university: '' }],
-    experiences: [{ startingDate: '', endingDate: '', position: '', hospital: '' }],
-    timeSlots: [{ day: '', startingDate: '', endingDate: '', position: '', hospital: '' }],
-    about: '',
-    photo: null,
+    name:'',
+    email:'',
+    phone:'',
+    bio:'',
+    specialization:'',
+    ticketPrice:0,
+    qualifications:[{ startingDate:'', endingDate:'', degree:'', university:'' }],
+    experiences:[{ startingDate:'', endingDate:'', position:'', hospital:'' }],
+    timeSlots:[{ day:'', startingDate:'', endingDate:'' }],
+    about:'',
+    photo:null
   });
 
-  useEffect((doctorData) => {
+  useEffect(() => {
+
+    const doctor = doctors[0];
+
     setFormData({
-      name: doctorData?.name ?? '',
-      email: doctorData?.email ?? '',
-      phone: doctorData?.phone ?? '',
-      bio: doctorData?.bio ?? '',
-      specialization: doctorData?.specialization ?? '',
-      ticketPrice: doctorData?.ticketPrice ?? 0,
-      qualifications:  doctorData.qualifications?.qualifications,
-      experiences: doctorData.experiences?.experiences ,
-      timeSlots:doctorData.timeSlots?.timeSlots,
-      about: doctorData.about?.about,
-      photo: doctorData.photo?.photo,
+      name: doctor?.name ?? '',
+      specialization: doctor?.specialty ?? '',
+      ticketPrice: doctor?.ticketPrice ?? 0,
+      photo: doctor?.photo ?? null
     });
-  }, [doctorData]);
+
+  }, []);
   
 
   const handleInputChange = (e) => {
